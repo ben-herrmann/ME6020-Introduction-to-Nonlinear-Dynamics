@@ -66,7 +66,7 @@ Un retrato de fase muestra las diferentes trayectorias que puede exhibir un sist
 >#### Vectores y valores propios
 > Los vectores propios definen _subespacios invariantes_ en el espacio de estado que determinan la estructura de del retrato de fase para un sistema lineal. La ubicación de los valores propios en el _plano complejo_ permite inferir el sentido de las trayectorias y distinguir entre _direcciones rápidas_ y _direcciones lentas_ en el espacio de estado.
 
-Al momento de dibujar un retrato de fase, es convención usar →,← para indicar la dirección de las trayectorias, usar ● para los equilibrios estables y ◦ para los equilibrios inestables, como se muestra a continuación
+Al momento de dibujar un retrato de fase, es convención usar →,← para indicar la dirección de las trayectorias, como se muestra a continuación.
 
 """
 
@@ -74,7 +74,7 @@ Al momento de dibujar un retrato de fase, es convención usar →,← para indic
 md"""
 Bosquejo de un retrato de fase y valores propios en el plano complejo:
 
-$(Resource("https://github.com/ben-herrmann/ME6020-Introduction-to-Nonlinear-Dynamics/blob/main/Data/bosquejo%20retrato%20de%20fase%201D.png?raw=true", :width=>300))
+$(Resource("https://github.com/ben-herrmann/ME6020-Introduction-to-Nonlinear-Dynamics/blob/main/Data/bosquejo%20retrato%20de%20fase%202D%20lineal.png?raw=true", :width=>500))
 
 El objetivo de este ejercicio es aprender a dibujar el retrato de fase de un sistema a lineal partir de sus ecuaciones gobernantes e inferir su comportamiento a partir de este.
 
@@ -203,39 +203,24 @@ md"""
 
 # ╔═╡ 9ede9d97-e252-481e-b38a-a6166744e160
 md"""
-## **Ejercicio 2** — Análisis computacional
+## **Ejercicio 2** — Vectores y patrones
 
-Un análisis de estabilidad lineal requiere conocimiento de los puntos de equilibrio de un sistema. En este ejercicio deberás usar el computador para calcular puntos de y para integrar trayectorias con condiciones iniciales específicas.
+Al discretizar de una ecuación en derivadas parciales, muchas veces es posible obtener un sistema dinámico donde el vector de estado corresponde a la distribución espacial de la variable modelada. En este contexto, los vectores propios representan los patrones _más importantes_ para la dinámica lineal.
 
-El sistema dinámico a analizar es 
+En este ejercicio se estudiará la conducción de calor en un cuadrado con condiciones de borde de temperatura constante.
 
-$\dot{x}=e^{-1/x}+0.05-0.4 x$
+$\partial_t u=\partial_{xx}u + \partial_{yy}u,$
 
-y corresponde a un modelo térmico de una batería. 
+$x \in \left[-1,1\right], \ y \in \left[-1,1\right],$
 
-> #### Modelo térmico de una batería
->
->Consideraremos un modelo térmico unidimensional para una batería que es enfriada activamente por convección forzada para remover el calor generado internamente por reacciones químicas. La dinámica del sistema es gobernada por el balance de energía que describe la competencia entre estos dos efectos
->
->$\begin{equation}
->mc\frac{\mathrm{d}T}{\mathrm{d}t}=Ce^{-E_a/RT}-hA(T-T_\infty),
->\end{equation}$
->
->donde $T$ es la temperatura absoluta, $t$ es el tiempo, $m$, $c$ y $A$ son la masa, capacidad térmica y superficie de la batería, $C$ es un coeficiente pre-exponencial específico de la reacción química, $E_a$ es la energía de activación de Arrhenius y $R$ es la constante universal de gas ideal.
->
->Es posible llevar el sistema a la forma $\dot{x}=f(x,\boldsymbol{\mu})$ agrupando las constantes físicas, adimensionalizando el tiempo y la temperatura.
->
->La nueva variable temporal se obtiene escalando $t\longrightarrow \frac{CR}{mcE_a}t$.
->
->El vector de estado se define como $x=\frac{R}{E_a}T$,
->
->Los parámetros se reducen a $\boldsymbol{\mu}=(\mu_1, \mu_2)^T=(\frac{hAT_\infty}{C},\frac{hAE_a}{CR})^T$.
->
->Finalmente, el modelo simplificado es
->
->$\dot{x}=e^{-1/x}+\mu_1-\mu_2 x.$
->
->El sistema considerado en este ejercicio corresponde a la instancia $\boldsymbol{\mu}=(0.05,0.4)^T$.
+$u(-1,y)=u(1,y)=u(x,-1)=u(x,1)=0.$
+
+El Laplaciano $\partial_{xx}+\partial_{yy}$ es un operador lineal y es posible discretizarlo para obtener un sistema dinámico de la forma
+
+$\dot{\mathbf{u}}=\mathbf{Au},$
+
+donde el vector de estado $\mathbf{u}$ es la temperatura discretizada en el interior del dominio.
+
 
 """
 
@@ -1918,7 +1903,7 @@ version = "3.5.0+0"
 # ╟─56f805e5-7ef8-42fd-a375-d847e2a2fedf
 # ╠═d0b4c44a-0e5b-4656-b54a-9fb06c8b7b73
 # ╟─4b673c34-52d4-4207-8732-048f8bec7b94
-# ╠═4ec0c9c9-159b-4f2d-bdfc-fa745a06d8d2
+# ╟─4ec0c9c9-159b-4f2d-bdfc-fa745a06d8d2
 # ╟─68e6aa93-21a1-4ab1-a6a8-ab5e761f677e
 # ╟─36b63ecb-9b8b-4cc7-9891-383f0fb1137e
 # ╟─8a90e010-7127-4f63-a351-b70c998c0116
@@ -1946,7 +1931,7 @@ version = "3.5.0+0"
 # ╟─7a73adac-5d94-47d5-a680-7a67af73453e
 # ╟─e2f8dc5d-b4ed-4d53-a9ef-271ff85038a0
 # ╟─fa18a0c4-7093-4e87-892c-14de208a63f2
-# ╟─9ede9d97-e252-481e-b38a-a6166744e160
+# ╠═9ede9d97-e252-481e-b38a-a6166744e160
 # ╟─4668e862-f911-4bbd-98c8-cb402ed94211
 # ╟─ec1349d3-b7c1-4c0b-b0ad-87479fd55f1d
 # ╟─00442873-1716-4261-b18d-b10f79b9669d

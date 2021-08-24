@@ -70,7 +70,7 @@ md"""
 >#### Retrato de fase
 > Un retrato de fase muestra de manera cualitativa las diferentes trayectorias que puede exhibir un sistema. En el caso unidimensional, un simple bosquejo del campo vectorial en el espacio de estados permite inferir la estabilidad de los puntos de equilibrio.
 >
-> Al momento de dibujar un retrato de fase, es convención usar →,← para indicar la dirección de las trayectorias, usar ● para los equilibrios estables y ◦ para los equilibrios inestables, como se muestra a continuación
+> Al momento de dibujar un retrato de fase, es convención usar →,← para indicar la dirección de las trayectorias, usar ● para los equilibrios estables y ◦ para los equilibrios inestables, como se muestra a continuación.
 
 """
 
