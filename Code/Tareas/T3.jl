@@ -25,7 +25,7 @@ md"""
 # **Tarea 3** — _Bifurcaciones elementales_
 `ME6020`, Primavera 2021
 
-`Fecha de entrega`: **Jueves 16 de septiembre, 2021 a las 11:59**
+`Fecha de entrega`: **Viernes 10 de septiembre, 2021 a las 11:59**
 
 Este notebook contiene ¡_chequeo de respuestas automatizado_! En algunos ejercicios verás un recuadro de color que evalua tu respuesta y proporciona retroalimentación basada en el resultado.
 
@@ -595,9 +595,9 @@ elseif sys1 == "sn"
 elseif sys1 == "trans"
 	incorrecto("¿Cuantos puntos de equilibrio existen antes y después de la bifurcación?")
 elseif sys1 == "pfork_sup"
-	casi("Revisa la estabilidad de los distintos equilibrios.")
+	correcto("¡El equilibrio estable da origen a uno inestable acompañado de dos ramas estables!")
 elseif sys1 == "pfork_sub"
-	correcto("¡El equilibrio inestable da origen a uno estable acompañado de dos ramas inestables!")
+	casi("Revisa la estabilidad de los distintos equilibrios.")
 end
 
 # ╔═╡ 99a26e2a-3e0a-407b-adc8-abc23b01b9d5
@@ -623,7 +623,7 @@ elseif sys3 == "trans"
 elseif sys3 == "pfork_sup"
 	correcto("¡El equilibrio estable da origen a uno inestable acompañado de dos ramas estables!")
 elseif sys3 == "pfork_sub"
-	casi("Revisa la estabilidad de los distintos equilibrios.")
+		casi("Revisa la estabilidad de los distintos equilibrios.")
 end
 
 # ╔═╡ 0089aa1d-ac2a-4a7a-9ba4-28f5d575db31
