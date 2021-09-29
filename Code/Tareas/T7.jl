@@ -4,15 +4,6 @@
 using Markdown
 using InteractiveUtils
 
-# This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
-macro bind(def, element)
-    quote
-        local el = $(esc(element))
-        global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : missing
-        el
-    end
-end
-
 # ╔═╡ d0b4c44a-0e5b-4656-b54a-9fb06c8b7b73
 begin
 	using PlutoUI
@@ -24,10 +15,10 @@ end
 # ╔═╡ 3072ca08-a0d3-40f4-a2d4-905c6e1f9108
 md"""
 
-# **Tarea 6** — _Ciclos límite_
+# **Tarea 7** — _Ciclos límite_
 `ME6020`, Primavera 2021
 
-`Fecha de entrega`: **Viernes 15 de octubre, 2021 a las 11:59**
+`Fecha de entrega`: **Viernes 29 de octubre, 2021 a las 11:59**
 
 Este notebook contiene ¡_chequeo de respuestas automatizado_! En algunos ejercicios verás un recuadro de color que evalua tu respuesta y proporciona retroalimentación basada en el resultado.
 
@@ -58,38 +49,6 @@ md"""
 _La primera vez que corras este notebook, esto podría tomar hasta 15 minutos. ¡No te rindas!_
 """
 
-# ╔═╡ 10d0cb54-5249-4593-9127-7968924dccf5
-md"""
-
-### Bifurcación de Hopf interactiva
-
-Una **bifurcación** ocurre cuando la variación de un parámetro genera cambios cualitativos en el comportamiento de un sistema dinámico, como la creación, destrucción o cambios en la estabilidad de puntos equilibrios o ciclos límite. Las bifurcaciones de Hopf son el mecanismo más común para la creación o destrucción de ciclos límite.
-
-Las _formas normales_ corresponden a las expresiones más simples de cada bifurcación. Casos más complejos pueden ser reducidos a la forma normal mediante una transformación no lineal.
-
-A continuación se presentan gráficos interactivos de las formas normales de las bifurcaciones de Hopf super- y subcrítica.
-
-"""
-
-# ╔═╡ 9732a751-0403-4e56-9e05-5fd7b05f62db
-@bind bifurcation Select([
-		"none" => "selecciona una bifurcación",
-		"hopf_sup" => "bifurcación de Hopf supercrítica",
-		"hopf_sub" => "bifurcación de Hopf subcrítica"])
-
-# ╔═╡ ec38dd94-2948-4ddb-af75-885229d37e37
-md"""
-
-👉 Usa el deslizador para mover el parámetro $\mu$ y visualizar la bifurcación
-
-"""
-
-# ╔═╡ b9d16eab-d32b-4218-a190-078f2cbd4e92
-begin
-μs = -3:0.05:3
-@bind μ PlutoUI.Slider(μs, default = 0.0)
-end
-
 # ╔═╡ 3aba0b0c-8837-4946-a162-e27e3473a0e6
 md"""
 
@@ -114,7 +73,6 @@ Algunas reacciones químicas pueden generar oscilaciones auto-sustentadas en la 
 > #### Reacción de Belousov-Zhabotinsky
 > El ejemplo más famoso es la reacción BZ mostrada más abajo. Esta fue encontrada por el bioquímico ruso Boris Belousov a principios de los 1950's. En ese tiempo se pensaba que toda reacción química debía acercarse de manera monotónica al equilibrio. El descubrimiento fue tan radical que los resultados de Belousov fueron rechazados por numerosas revistas científicas, incluso recibiendo burlas por parte de revisores. En 1961, un estudiante de postgrado llamado Zhabotinski confirma que Belousov estaba en lo correcto y hace públicos los resultados recién en 1968 en una conferencia internacional Praga.
 
-$(Resource("https://i0.wp.com/fyfluiddynamics.com/wp-content/uploads/2019/12/BZ1.gif?fit=720%2C405&ssl=1", :width=>500, :autoplay => "", :loop => ""))
 
 En este ejercicio analizaremos una reacción química más simple, la reacción ClO₂-I₂-MA, cuya dinámica en forma adimensional puede ser descrita por el siguiente sistema de ecuaciones diferenciales:
 
@@ -144,6 +102,20 @@ En el reporte debes incluir:
 
 """
 
+# ╔═╡ 5bd74fa2-0468-413e-8abe-5d0b1b20b4ed
+md"""
+
+$(Resource("https://github.com/ben-herrmann/ME6020-Introduction-to-Nonlinear-Dynamics/blob/main/Data/lorenz.webm?raw=true", :width=>700, :autoplay => ""))
+
+"""
+
+# ╔═╡ 3314b367-d7cd-4ddb-8417-a391fc3dbb27
+md"""
+
+$(Resource("https://github.com/ben-herrmann/ME6020-Introduction-to-Nonlinear-Dynamics/blob/main/Data/lorenz_lyap.png?raw=true", :width=>500))
+
+"""
+
 # ╔═╡ 9ede9d97-e252-481e-b38a-a6166744e160
 md"""
 ## **Ejercicio 2** — Buscando órbitas periódicas
@@ -159,9 +131,6 @@ $\begin{align}
 \end{align}$
 
 con $\sigma=10$, $\rho=19$, y $\beta=8/3$. Para estos valores de los parámetros, el sistema tiene un equilibrio inestable en el origen $(0,0,0)$, dos equilibrios estables en $(\pm\sqrt{\beta(\rho-1)},\pm\sqrt{\beta(\rho-1)},\rho-1)$, y dos ciclos límites inestables, como se muestra en la figura.
-
-$(Resource("https://github.com/ben-herrmann/ME6020-Introduction-to-Nonlinear-Dynamics/blob/main/Data/lorenz_rho=19.png?raw=true", :width=>1000))
-
 
 """
 
@@ -200,398 +169,6 @@ md"## Librería de funciones"
 # ╔═╡ 07d12a2a-7349-4ce6-97ca-44bae282e697
 md"Algunas funciones de ayuda usadas en este notebook."
 
-# ╔═╡ bb9e5bc5-971f-4e0d-9a52-133fe85cae24
-begin
-
-# type definition
-mutable struct dynsys
-    f::Function
-    μ
-    x_vars::Vector{Num}
-    μ_vars::Vector{Num}
-    expr::Vector{Num}
-
-    function dynsys(f,μ,x_vars,μ_vars)
-        expr = f(x_vars,μ_vars,0)
-        new(f,μ,x_vars,μ_vars,expr)
-    end
-end
-	
-# integrate a trajectory
-function simulate(sys,x0,t)
-    dt = t[2] - t[1]
-    prob = ODEProblem(sys.f, x0, (t[1], t[end]), sys.μ)
-    sol = solve(prob, Tsit5(), reltol=1e-4, abstol=1e-4, saveat=dt)
-    X = hcat(sol.u...)
-    return X
-end
-	
-# Start-Landau equation
-function stuartlandau(μ=[1.0,1.0,1.0,0.0])
-    f(x,μ,t) = [μ[1]*x[1]-μ[2]*x[2]-(μ[3]*x[1]-μ[4]*x[2])*(x[1]^2+x[2]^2),
-                μ[1]*x[2]+μ[2]*x[1]-(μ[3]*x[2]+μ[4]*x[1])*(x[1]^2+x[2]^2)]
-    x_vars = @variables x,y
-    μ_vars = @variables λr, λi, lr, li
-    return dynsys(f,μ,x_vars,μ_vars)
-end
-	
-end
-
-# ╔═╡ ae1a38a2-abe4-49ea-95a5-b648f236de47
-function hopf_sup_fig(μ)
-	sys = stuartlandau([μ,4,1,-1])
-	X1 = simulate(sys,[2.0,2.5],0:0.01:10)
-	xarrw1 = X1[:,[2,25,125]]
-	ẋarrw1 = hcat([sys.f(xarrw1[:,i],sys.μ,0) for i=1:size(xarrw1,2)]...)
-	x = collect(-3:0.01:3)
-	θ = collect(0:0.01:1)*2π
-	
-	set_theme!(theme_minimal())
-	fig = Figure(resolution = (800, 800))
-	
-	#phase portrait
-	lines(fig[1,1],x,0*x,0*x, color=:black,aspect=DataAspect(),
-		axis = (; type = Axis3,protrusions = (0, 0, 0, 0),
-        viewmode = :fit, limits = (-3, 3, -3, 3, -3, 3),
-		xlabel="x",ylabel="μ",zlabel="y",elevation=π/8,azimuth=0.32π))
-	lines!(0*x,0*x,x, color=:black)
-	lines!(0*μs,μs,0*μs, color=:black)
-	mesh!([-3 μ -3; -3 μ 3; 3 μ 3; 3 μ -3],[1 2 3; 3 4 1],
-		shading=false, transparency=true,color=(:gray,0.3))
-	lines!(X1[1,:], μ.+0*X1[1,:],X1[2,:],color=:dodgerblue3)
-	arrows!(xarrw1[1,:],μ.+0*xarrw1[1,:],xarrw1[2,:],
-			ẋarrw1[1,:],0*ẋarrw1[1,:],ẋarrw1[2,:], color=:dodgerblue3,
-			align=:center, lengthscale=0, arrowsize= 0.15)
-	if μ < 0
-		meshscatter!([0],[μ],[0], color=:orange, markersize = 0.07)
-	elseif μ == 0
-		meshscatter!([0],[μ],[0], color=:tomato, markersize = 0.07)
-	else
-		X2 = simulate(sys,[0.01,0],0:0.01:100)
-		xarrw2 = X2[:,[400]]
-		ẋarrw2 = hcat([sys.f(xarrw2[:,i],sys.μ,0) for i=1:size(xarrw2,2)]...)
-		lines!(X2[1,:], μ.+0*X2[1,:],X2[2,:],color=:dodgerblue3)
-		arrows!(xarrw2[1,:],μ.+0*xarrw2[1,:],xarrw2[2,:],
-			ẋarrw2[1,:],0*ẋarrw2[1,:],ẋarrw2[2,:], color=:dodgerblue3,
-			align=:center, lengthscale=0, arrowsize= 0.15)
-		meshscatter!([0],[μ],[0], color=:red, markersize = 0.07)
-		lines!(√(μ)*cos.(θ),μ.+0*θ,√(μ)*sin.(θ), color=:orange,linewidth=3)
-	end
-	return fig
-end
-
-# ╔═╡ 4df70ab0-2cbf-4db6-828d-fd97608fcf3a
-function hopf_sub_fig(μ)
-	sys = stuartlandau([μ,4,-1,-1])
-	x = collect(-3:0.01:3)
-	θ = collect(0:0.01:1)*2π
-	tend = 5.5/(abs(μ)+1)
-	set_theme!(theme_minimal())
-	fig = Figure(resolution = (800, 800))
-	
-	lines(fig[1,1],x,0*x,0*x, color=:black,aspect=DataAspect(),
-		axis = (; type = Axis3,protrusions = (0, 0, 0, 0),
-        viewmode = :fit, limits = (-3, 3, -3, 3, -3, 3),
-		xlabel="x",ylabel="μ",zlabel="y",elevation=π/8,azimuth=0.32π))
-	lines!(0*x,0*x,x, color=:black)
-	lines!(0*μs,μs,0*μs, color=:black)
-	mesh!([-3 μ -3; -3 μ 3; 3 μ 3; 3 μ -3],[1 2 3; 3 4 1],
-		shading=false, transparency=true,color=(:gray,0.3))
-	if μ < 0
-		X1p = simulate(sys,[0.0,-1.1*√(-μ)],0:tend/1000:0.3*tend)
-		X1m = simulate(sys,[0.0,-0.9*√(-μ)],0:tend/1000:2tend)
-		xarrw1p = X1p[:,[100,end]]
-		ẋarrw1p = hcat([sys.f(xarrw1p[:,i],sys.μ,0) for i=1:size(xarrw1p,2)]...)
-		arrows!(xarrw1p[1,:],μ.+0*xarrw1p[1,:],xarrw1p[2,:],
-			ẋarrw1p[1,:],0*ẋarrw1p[1,:],ẋarrw1p[2,:], color=:dodgerblue3,
-			align=:center, lengthscale=0, arrowsize= 0.15)
-		xarrw1m = X1m[:,[100,500]]
-		ẋarrw1m = hcat([sys.f(xarrw1m[:,i],sys.μ,0) for i=1:size(xarrw1m,2)]...)
-		arrows!(xarrw1m[1,:],μ.+0*xarrw1m[1,:],xarrw1m[2,:],
-			ẋarrw1m[1,:],0*ẋarrw1m[1,:],ẋarrw1m[2,:], color=:dodgerblue3,
-			align=:center, lengthscale=0, arrowsize= 0.15)
-		lines!(X1p[1,:], μ.+0*X1p[1,:],X1p[2,:],color=:dodgerblue3)
-		lines!(X1m[1,:], μ.+0*X1m[1,:],X1m[2,:],color=:dodgerblue3)
-		meshscatter!([0],[μ],[0], color=:orange, markersize = 0.07)
-		lines!(√(-μ)*cos.(θ),μ.+0*θ,√(-μ)*sin.(θ), color=:red,linewidth=3)
-	elseif μ == 0
-		meshscatter!([0],[μ],[0], color=:tomato, markersize = 0.07)
-	else
-		X2 = simulate(sys,[0.05,0],0:tend/1000:tend)
-		lines!(X2[1,:], μ.+0*X2[1,:],X2[2,:],color=:dodgerblue3)
-		xarrw2 = X2[:,[700,end]]
-		ẋarrw2 = hcat([sys.f(xarrw2[:,i],sys.μ,0) for i=1:size(xarrw2,2)]...)
-		arrows!(xarrw2[1,:],μ.+0*xarrw2[1,:],xarrw2[2,:],
-			ẋarrw2[1,:],0*ẋarrw2[1,:],ẋarrw2[2,:], color=:dodgerblue3,
-			align=:center, lengthscale=0, arrowsize= 0.15)
-		meshscatter!([0],[μ],[0], color=:red, markersize = 0.07)
-	end
-	return fig
-end
-
-# ╔═╡ 7b07f8f8-8bf7-415e-940f-389c3686edaa
-
-if bifurcation == "hopf_sup"
-	hopf_sup_fig(μ)
-elseif bifurcation == "hopf_sub"
-	hopf_sub_fig(μ)
-end
-
-# ╔═╡ 7c2fcedf-7481-4138-936f-c9abec32d021
-my_theme = Theme(
-		fontsize=20, font="serif-roman",
-		Axis=(
-			xticklabelsvisible=false,
-			xticksvisible=false,
-			yticklabelsvisible=false,
-			yticksvisible=false,
-			xgridvisible = false,
-			ygridvisible = false,
-			leftspinevisible = false,
-        	rightspinevisible = false,
-        	bottomspinevisible = false,
-        	topspinevisible = false
-			)
-	);
-
-# ╔═╡ 61a96a78-06dd-41e6-8aa3-6de087feaa2a
-function camera_input(;max_size=200, default_url="https://i.imgur.com/SUmi94P.png")
-"""
-<span class="pl-image waiting-for-permission">
-<style>
-	
-	.pl-image.popped-out {
-		position: fixed;
-		top: 0;
-		right: 0;
-		z-index: 5;
-	}
-
-	.pl-image #video-container {
-		width: 250px;
-	}
-
-	.pl-image video {
-		border-radius: 1rem 1rem 0 0;
-	}
-	.pl-image.waiting-for-permission #video-container {
-		display: none;
-	}
-	.pl-image #prompt {
-		display: none;
-	}
-	.pl-image.waiting-for-permission #prompt {
-		width: 250px;
-		height: 200px;
-		display: grid;
-		place-items: center;
-		font-family: monospace;
-		font-weight: bold;
-		text-decoration: underline;
-		cursor: pointer;
-		border: 5px dashed rgba(0,0,0,.5);
-	}
-
-	.pl-image video {
-		display: block;
-	}
-	.pl-image .bar {
-		width: inherit;
-		display: flex;
-		z-index: 6;
-	}
-	.pl-image .bar#top {
-		position: absolute;
-		flex-direction: column;
-	}
-	
-	.pl-image .bar#bottom {
-		background: black;
-		border-radius: 0 0 1rem 1rem;
-	}
-	.pl-image .bar button {
-		flex: 0 0 auto;
-		background: rgba(255,255,255,.8);
-		border: none;
-		width: 2rem;
-		height: 2rem;
-		border-radius: 100%;
-		cursor: pointer;
-		z-index: 7;
-	}
-	.pl-image .bar button#shutter {
-		width: 3rem;
-		height: 3rem;
-		margin: -1.5rem auto .2rem auto;
-	}
-
-	.pl-image video.takepicture {
-		animation: pictureflash 200ms linear;
-	}
-
-	@keyframes pictureflash {
-		0% {
-			filter: grayscale(1.0) contrast(2.0);
-		}
-
-		100% {
-			filter: grayscale(0.0) contrast(1.0);
-		}
-	}
-</style>
-
-	<div id="video-container">
-		<div id="top" class="bar">
-			<button id="stop" title="Stop video">✖</button>
-			<button id="pop-out" title="Pop out/pop in">⏏</button>
-		</div>
-		<video playsinline autoplay></video>
-		<div id="bottom" class="bar">
-		<button id="shutter" title="Click to take a picture">📷</button>
-		</div>
-	</div>
-		
-	<div id="prompt">
-		<span>
-		Enable webcam
-		</span>
-	</div>
-
-<script>
-	// based on https://github.com/fonsp/printi-static (by the same author)
-
-	const span = currentScript.parentElement
-	const video = span.querySelector("video")
-	const popout = span.querySelector("button#pop-out")
-	const stop = span.querySelector("button#stop")
-	const shutter = span.querySelector("button#shutter")
-	const prompt = span.querySelector(".pl-image #prompt")
-
-	const maxsize = $(max_size)
-
-	const send_source = (source, src_width, src_height) => {
-		const scale = Math.min(1.0, maxsize / src_width, maxsize / src_height)
-
-		const width = Math.floor(src_width * scale)
-		const height = Math.floor(src_height * scale)
-
-		const canvas = html`<canvas width=\${width} height=\${height}>`
-		const ctx = canvas.getContext("2d")
-		ctx.drawImage(source, 0, 0, width, height)
-
-		span.value = {
-			width: width,
-			height: height,
-			data: ctx.getImageData(0, 0, width, height).data,
-		}
-		span.dispatchEvent(new CustomEvent("input"))
-	}
-	
-	const clear_camera = () => {
-		window.stream.getTracks().forEach(s => s.stop());
-		video.srcObject = null;
-
-		span.classList.add("waiting-for-permission");
-	}
-
-	prompt.onclick = () => {
-		navigator.mediaDevices.getUserMedia({
-			audio: false,
-			video: {
-				facingMode: "environment",
-			},
-		}).then(function(stream) {
-
-			stream.onend = console.log
-
-			window.stream = stream
-			video.srcObject = stream
-			window.cameraConnected = true
-			video.controls = false
-			video.play()
-			video.controls = false
-
-			span.classList.remove("waiting-for-permission");
-
-		}).catch(function(error) {
-			console.log(error)
-		});
-	}
-	stop.onclick = () => {
-		clear_camera()
-	}
-	popout.onclick = () => {
-		span.classList.toggle("popped-out")
-	}
-
-	shutter.onclick = () => {
-		const cl = video.classList
-		cl.remove("takepicture")
-		void video.offsetHeight
-		cl.add("takepicture")
-		video.play()
-		video.controls = false
-		console.log(video)
-		send_source(video, video.videoWidth, video.videoHeight)
-	}
-	
-	
-	document.addEventListener("visibilitychange", () => {
-		if (document.visibilityState != "visible") {
-			clear_camera()
-		}
-	})
-
-
-	// Set a default image
-
-	const img = html`<img crossOrigin="anonymous">`
-
-	img.onload = () => {
-	console.log("helloo")
-		send_source(img, img.width, img.height)
-	}
-	img.src = "$(default_url)"
-	console.log(img)
-</script>
-</span>
-""" |> HTML
-end
-
-# ╔═╡ 2c208288-d6d0-4723-8853-0448d6e11613
-function process_raw_camera_data(raw_camera_data)
-	# the raw image data is a long byte array, we need to transform it into something
-	# more "Julian" - something with more _structure_.
-	
-	# The encoding of the raw byte stream is:
-	# every 4 bytes is a single pixel
-	# every pixel has 4 values: Red, Green, Blue, Alpha
-	# (we ignore alpha for this notebook)
-	
-	# So to get the red values for each pixel, we take every 4th value, starting at 
-	# the 1st:
-	reds_flat = UInt8.(raw_camera_data["data"][1:4:end])
-	greens_flat = UInt8.(raw_camera_data["data"][2:4:end])
-	blues_flat = UInt8.(raw_camera_data["data"][3:4:end])
-	
-	# but these are still 1-dimensional arrays, nicknamed 'flat' arrays
-	# We will 'reshape' this into 2D arrays:
-	
-	width = raw_camera_data["width"]
-	height = raw_camera_data["height"]
-	
-	# shuffle and flip to get it in the right shape
-	reds = reshape(reds_flat, (width, height))' / 255.0
-	greens = reshape(greens_flat, (width, height))' / 255.0
-	blues = reshape(blues_flat, (width, height))' / 255.0
-	
-	# we have our 2D array for each color
-	# Let's create a single 2D array, where each value contains the R, G and B value of 
-	# that pixel
-	
-	RGB.(reds, greens, blues)
-end
-
 # ╔═╡ 018d0a4f-9a99-484f-9ed8-fceda26d04bf
 selecciona(text="Selecciona una alternativa de la lista.") = Markdown.MD(Markdown.Admonition("warning", "¡Aquí vamos!", [Markdown.parse(text)]))
 
@@ -617,9 +194,6 @@ correcto(text="") = Markdown.MD(Markdown.Admonition("correct", "¡Lo tienes!", [
 bigbreak = html"<br><br><br><br><br>";
 
 # ╔═╡ 4b673c34-52d4-4207-8732-048f8bec7b94
-bigbreak
-
-# ╔═╡ 5140c9a3-7930-4de0-ac41-56f6dc987820
 bigbreak
 
 # ╔═╡ fa18a0c4-7093-4e87-892c-14de208a63f2
@@ -2267,23 +1841,19 @@ version = "3.5.0+0"
 
 # ╔═╡ Cell order:
 # ╟─f54bfce9-159b-4f86-bd1b-3f1c7a90c300
-# ╟─3072ca08-a0d3-40f4-a2d4-905c6e1f9108
+# ╠═3072ca08-a0d3-40f4-a2d4-905c6e1f9108
 # ╠═9dc021ac-3092-4dd2-b2bc-9f611d12774b
 # ╟─56f805e5-7ef8-42fd-a375-d847e2a2fedf
 # ╠═d0b4c44a-0e5b-4656-b54a-9fb06c8b7b73
 # ╟─4b673c34-52d4-4207-8732-048f8bec7b94
-# ╟─10d0cb54-5249-4593-9127-7968924dccf5
-# ╟─9732a751-0403-4e56-9e05-5fd7b05f62db
-# ╟─ec38dd94-2948-4ddb-af75-885229d37e37
-# ╟─b9d16eab-d32b-4218-a190-078f2cbd4e92
-# ╟─7b07f8f8-8bf7-415e-940f-389c3686edaa
-# ╟─5140c9a3-7930-4de0-ac41-56f6dc987820
 # ╟─3aba0b0c-8837-4946-a162-e27e3473a0e6
 # ╟─563009be-d8e4-4073-9971-f597364358c2
 # ╟─4ec0c9c9-159b-4f2d-bdfc-fa745a06d8d2
 # ╟─6b1140b9-0875-4d7b-9c35-f01d3bf962ae
+# ╠═5bd74fa2-0468-413e-8abe-5d0b1b20b4ed
+# ╠═3314b367-d7cd-4ddb-8417-a391fc3dbb27
 # ╟─fa18a0c4-7093-4e87-892c-14de208a63f2
-# ╟─9ede9d97-e252-481e-b38a-a6166744e160
+# ╠═9ede9d97-e252-481e-b38a-a6166744e160
 # ╟─4c13669d-d55c-4028-b4b5-3f8e0deba4be
 # ╟─81cd215c-2a2e-4a81-82b1-13252f61b5c2
 # ╟─00442873-1716-4261-b18d-b10f79b9669d
@@ -2291,12 +1861,6 @@ version = "3.5.0+0"
 # ╟─9206fb45-a0cf-4fe7-904b-d480ef181deb
 # ╟─68df75b8-a83b-4235-83fc-9da0f7a629ae
 # ╟─07d12a2a-7349-4ce6-97ca-44bae282e697
-# ╟─bb9e5bc5-971f-4e0d-9a52-133fe85cae24
-# ╟─ae1a38a2-abe4-49ea-95a5-b648f236de47
-# ╟─4df70ab0-2cbf-4db6-828d-fd97608fcf3a
-# ╟─7c2fcedf-7481-4138-936f-c9abec32d021
-# ╟─61a96a78-06dd-41e6-8aa3-6de087feaa2a
-# ╟─2c208288-d6d0-4723-8853-0448d6e11613
 # ╟─018d0a4f-9a99-484f-9ed8-fceda26d04bf
 # ╟─5d4149b6-fd2c-45c4-8c99-b5a9d9e34b77
 # ╟─db1c3976-24d3-41fd-acc4-1c9e80135e25
