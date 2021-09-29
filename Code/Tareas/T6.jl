@@ -160,6 +160,10 @@ $\begin{align}
 
 con $\sigma=10$, $\rho=19$, y $\beta=8/3$. Para estos valores de los parámetros, el sistema tiene un equilibrio inestable en el origen $(0,0,0)$ y dos equilibrios estables en $(\pm\sqrt{\beta(\rho-1)},\pm\sqrt{\beta(\rho-1)},\rho-1)$, como se muestra en la figura
 
+
+$(Resource("https://github.com/ben-herrmann/ME6020-Introduction-to-Nonlinear-Dynamics/blob/main/Data/lorenz_rho%3D19.pdf", :width=>500))
+
+
 """
 
 # ╔═╡ e539671a-f131-4028-9f54-83a7ff20c3e9
