@@ -67,7 +67,7 @@ Una **bifurcación** ocurre cuando la variación de un parámetro genera cambios
 
 Las _formas normales_ corresponden a las expresiones más simples de cada bifurcación. Casos más complejos pueden ser reducidos a la forma normal mediante una transformación no lineal.
 
-A continuación se presentan gráficos interactivos del retrato de fase y diagrama de bifurcación para las formas normales de las bifurcaciones de Hopf super- y subcrítica.
+A continuación se presentan gráficos interactivos de las formas normales de las bifurcaciones de Hopf super- y subcrítica.
 
 """
 
@@ -144,6 +144,13 @@ En el reporte debes incluir:
 
 """
 
+# ╔═╡ 5bd74fa2-0468-413e-8abe-5d0b1b20b4ed
+html"""
+
+<iframe width="100%" height="100%" src="https://www.youtube.com/embed/H_HaDr-WK38?list=PLQlzmkuJsuUsyLhsDG4vFkKAAcE4kPhlA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+"""
+
 # ╔═╡ 9ede9d97-e252-481e-b38a-a6166744e160
 md"""
 ## **Ejercicio 2** — Buscando órbitas periódicas
@@ -158,92 +165,31 @@ $\begin{align}
 \dot{z} &= xy-\beta z,
 \end{align}$
 
-con $\sigma=10$, $\rho=19$, y $\beta=8/3$. Para estos valores de los parámetros, el sistema tiene un equilibrio inestable en el origen $(0,0,0)$ y dos equilibrios estables en $(\pm\sqrt{\beta(\rho-1)},\pm\sqrt{\beta(\rho-1)},\rho-1)$, como se muestra en la figura
+con $\sigma=10$, $\rho=19$, y $\beta=8/3$. Para estos valores de los parámetros, el sistema tiene un equilibrio inestable en el origen $(0,0,0)$, dos equilibrios estables en $(\pm\sqrt{\beta(\rho-1)},\pm\sqrt{\beta(\rho-1)},\rho-1)$, y dos ciclos límites inestables, como se muestra en la figura.
 
-
-$(Resource("https://github.com/ben-herrmann/ME6020-Introduction-to-Nonlinear-Dynamics/blob/main/Data/lorenz_rho%3D19.pdf", :width=>500))
+$(Resource("https://github.com/ben-herrmann/ME6020-Introduction-to-Nonlinear-Dynamics/blob/main/Data/lorenz_rho=19.png?raw=true", :width=>1000))
 
 
 """
 
-# ╔═╡ e539671a-f131-4028-9f54-83a7ff20c3e9
-md"""
-La dinámica del péndulo doble puede ser descrita en términos de un vector de estados $\mathbf{x}=(\theta_1,\omega_1,\theta_2,\omega_2)$ que contiene las posiciones y velocidades angulares de ambos brazos. Los parámetros involucrados son la aceleración de gravedad $G$, las masas $M_1$ $M_2$ y los largos $L_1$ y $L_2$ de ambos péndulos. La ecuación de movimiento que describe la dinámica para estas variables es:
-
-$
-\begin{aligned}
-\dot{\theta}_1 &= \omega_1 \\
-\dot{\omega}_1 &= [M₂ L₁ \omega_1^2 \sin φ \cos φ + M₂ G \sin \theta_2 \cos φ + M₂ L₂ \omega_2^2 \sin φ - (M₁ + M₂) G \sin \theta_1] / (L₁ Δ) \\
-\dot{\theta}_2 &= \omega_2 \\
-\dot{\omega}_2 &= [-M₂ L₂ \omega_2^2 \sin φ \cos φ + (M₁ + M₂) G \sin \theta_1 \cos φ - (M₁ + M₂) L₁ \omega_1^2 \sin φ - (M₁ + M₂) G \sin \theta_2] / (L₂ Δ)
-\end{aligned}$
-
-
-donde $φ = \theta_2-\theta_1$ y $Δ = (M₁ + M₂) - M₂ \cos² φ$.
-
-Esta expresión tiene la forma $\dot{\mathbf{x}}=\mathbf{f(x,\mu)}$, donde $\mu$ agrupa los parámetros.
-
-"""
-
-# ╔═╡ eea227bf-0705-441e-a0d1-3d406af37581
+# ╔═╡ 4c13669d-d55c-4028-b4b5-3f8e0deba4be
 md"""
 
-#### Instrucciones
-👉 Escribe un pequeño reporte de no más de dos páginas abordando los puntos descritos a continuación.
+Encontrar las soluciones periódicas inestables no es tan fácil, y para calcularlas seguiremos el siguiente procedimiento:
 
-**Para todas las preguntas considera los parámetros $G=10, \ M_1=M_2=L_1=L_2=1.$**
-
-##### 2.1 Cálculo de trayectoria
-
-Simula la evolución del péndulo durante al menos 5 unidades de tiempo comenzando desde una condición inicial de tu elección. Entrega una animación de la dinámica y explica el procedimiento en el reporte. 
+1. Construir una _superficie de sección de Poincaré_. En particular usaremos el plano definido por $z=\rho-1$ que se muestra en la figura.
 
 
-##### 2.2 Análisis de puntos de equilibrio
-
-El péndulo doble tiene cuatro puntos de equilibrio triviales
-
-$\left(
-\begin{array}{c}
-\theta_1 \\ \omega_1 \\ \theta_2 \\ \omega_2
-\end{array}
-\right)^* =
-\left\lbrace
-\left(
-\begin{array}{c}
-0 \\ 0 \\ 0 \\ 0
-\end{array}
-\right),
-\left(
-\begin{array}{c}
-\pi \\ 0 \\ 0 \\ 0
-\end{array}
-\right),
-\left(
-\begin{array}{c}
-0 \\ 0 \\ \pi \\ 0
-\end{array}
-\right),
-\left(
-\begin{array}{c}
-\pi \\ 0 \\ \pi \\ 0
-\end{array}
-\right)
-\right\rbrace$
+2. Programar una función que tome un vector de estado sobre la sección $(x_k,y_k,\rho-1)$, evolucione la dinámica hasta la siguiente intersección con la plano **en la misma dirección** y entregue el nuevo punto $(x_{k+1},y_{k+1},\rho-1)$, es decir el _mapa de Poincaré_ $\mathbf{x}_{k+1}=P(\mathbf{x}_k)$.
 
 
-Linealiza las ecuaciones gobernantes alrededor de estos puntos de equilibrio y calcula los valores y vectores propios de las matrices resultantes. Clasifica los equilibrios y comenta los resultados.
+3. Encontrar los puntos de equilibrio para el mapa de Poincaré buscando numéricamente las raíces de $\mathbf{x}^*_{k}-P(\mathbf{x}^*_k)$.
 
-Se sugiere fuertemente utilizar una librería de matemática simbólica para el cálculo del Jacobiano, por ej. Sympy o Symbolics.jl.
 
-##### 2.3 Modelo a partir de linealización
+4. Verificar si el equilibrio encontrado para el mapa corresponde a un ciclo límite del sistema. Para esto calcula una trayectoria del sistema de Lorenz usando $\mathbf{x}^*_k$ como condición inicial.
 
-Construye un modelo lineal de la forma $\dot{\mathbf{x}}=\mathbf{Ax}$ a partir de la linealización alrededor del punto de equilibrio $\mathbf{x}^*=(\pi,0,\pi,0)$ que corresponde al péndulo estirado en la posición vertical hacia arriba.
 
-Simula el péndulo doble no lineal y el gobernado por el modelo lineal. Usando ambos modelos, calcula las evoluciones durante $1$ unidad de tiempo comenzando con una condición inicial $\mathbf{x}(0) = \mathbf{x}^*+(0,0,0,\varepsilon)$, donde $\varepsilon=0.001$ corresponde a una pequeña perturbación del punto de equilibrio.
-
-Grafica las series de tiempo de las variables de estado obtenidas usando la dinámica no lineal y el modelo lineal. Compara ambas trayectorias y comenta sobre la calidad de la predicción usando la linealización.
-
-**Se espera una redacción coherente, donde se explique el razonamiento detrás del trabajo realizado de manera entendible para un novato en sistemas dinámicos.**
+5. Graficar las trayectorias periódicas como series de tiempo y en el espacio de estados.
 
 """
 
@@ -663,7 +609,10 @@ casi(text="") = Markdown.MD(Markdown.Admonition("warning", "¡Estás cerca!", [M
 incorrecto(text="") = Markdown.MD(Markdown.Admonition("danger", "¡Intenta otra vez!", [Markdown.parse("La respuesta no es la correcta. "*text)]))
 
 # ╔═╡ 036ade21-f21b-462b-ab90-66d3bf54668d
-hint(text) = Markdown.MD(Markdown.Admonition("hint", "Hint", [text]))
+hint(text) = Markdown.MD(Markdown.Admonition("hint", "Hint", [Markdown.parse(text)]))
+
+# ╔═╡ 81cd215c-2a2e-4a81-82b1-13252f61b5c2
+hint("Para encontrar los equilibrios inestables del mapa de Poincaré se necesita una muy buena estimación inicial. El punto (0,1,ρ-1) podría funcionar.")
 
 # ╔═╡ 6b8c04a9-f8ea-4d39-8b48-61f8ad2e81e5
 yupis = ["¡Fantástico!", "¡Excelente!", "¡Muy bien!", "Yupi ❤", "¡Muy bien! 🎉", "¡Bien hecho!", "¡Sigue así!", "¡Buen trabajo!", "¡Súper!", "¡Tienes la respuesta correcta!", "Sigamos con la siguiente sección."];
@@ -2339,11 +2288,12 @@ version = "3.5.0+0"
 # ╟─3aba0b0c-8837-4946-a162-e27e3473a0e6
 # ╟─563009be-d8e4-4073-9971-f597364358c2
 # ╠═4ec0c9c9-159b-4f2d-bdfc-fa745a06d8d2
-# ╠═6b1140b9-0875-4d7b-9c35-f01d3bf962ae
+# ╟─6b1140b9-0875-4d7b-9c35-f01d3bf962ae
+# ╠═5bd74fa2-0468-413e-8abe-5d0b1b20b4ed
 # ╟─fa18a0c4-7093-4e87-892c-14de208a63f2
-# ╠═9ede9d97-e252-481e-b38a-a6166744e160
-# ╠═e539671a-f131-4028-9f54-83a7ff20c3e9
-# ╠═eea227bf-0705-441e-a0d1-3d406af37581
+# ╟─9ede9d97-e252-481e-b38a-a6166744e160
+# ╟─4c13669d-d55c-4028-b4b5-3f8e0deba4be
+# ╟─81cd215c-2a2e-4a81-82b1-13252f61b5c2
 # ╟─00442873-1716-4261-b18d-b10f79b9669d
 # ╟─f2f2f448-8d6a-428d-b596-68ac23c709aa
 # ╟─9206fb45-a0cf-4fe7-904b-d480ef181deb
