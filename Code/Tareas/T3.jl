@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.15.1
+# v0.16.0
 
 using Markdown
 using InteractiveUtils
@@ -1204,9 +1204,9 @@ uuid = "56ddb016-857b-54e1-b83d-db4d58db5568"
 
 [[MKL_jll]]
 deps = ["Artifacts", "IntelOpenMP_jll", "JLLWrappers", "LazyArtifacts", "Libdl", "Pkg"]
-git-tree-sha1 = "c253236b0ed414624b083e6b72bfe891fbd2c7af"
+git-tree-sha1 = "5455aef09b40e5020e1520f551fa3135040d4ed0"
 uuid = "856f044c-d86e-5d09-b602-aeab76dc8ba7"
-version = "2021.1.1+1"
+version = "2021.1.1+2"
 
 [[Makie]]
 deps = ["Animations", "Artifacts", "Base64", "ColorBrewer", "ColorSchemes", "ColorTypes", "Colors", "Contour", "Distributions", "DocStringExtensions", "FFMPEG", "FileIO", "FixedPointNumbers", "Formatting", "FreeType", "FreeTypeAbstraction", "GeometryBasics", "GridLayoutBase", "ImageIO", "IntervalSets", "Isoband", "KernelDensity", "LaTeXStrings", "LinearAlgebra", "MakieCore", "Markdown", "Match", "MathTeXEngine", "Observables", "Packing", "PlotUtils", "PolygonOps", "Printf", "Random", "Serialization", "Showoff", "SignedDistanceFields", "SparseArrays", "StaticArrays", "Statistics", "StatsBase", "StatsFuns", "StructArrays", "UnicodeFun"]
@@ -1739,11 +1739,11 @@ version = "3.5.0+0"
 # ╠═d0b4c44a-0e5b-4656-b54a-9fb06c8b7b73
 # ╟─4b673c34-52d4-4207-8732-048f8bec7b94
 # ╟─eef1e982-5636-42a1-9347-c9cb22ba6c95
-# ╟─aa7a170d-a422-411f-b873-874dcdb68246
+# ╠═aa7a170d-a422-411f-b873-874dcdb68246
 # ╟─bbd51c79-4f6e-42c4-86a4-99f6d2d3e6af
 # ╟─4fcc18b3-091f-4b52-8a2e-88c9577c8335
 # ╟─9f8157ad-134c-4a07-833e-8732a145f34e
-# ╟─367af3a0-85de-477c-bef8-4db94ac66654
+# ╠═367af3a0-85de-477c-bef8-4db94ac66654
 # ╟─4ec0c9c9-159b-4f2d-bdfc-fa745a06d8d2
 # ╟─270ba80b-7b3e-4d15-9640-ec0e98d21293
 # ╟─075f0b96-14aa-40f4-89f9-d57176e4383f
@@ -1767,7 +1767,7 @@ version = "3.5.0+0"
 # ╟─bc706e4f-6b82-4d1d-9469-1cfd36db1ffe
 # ╟─83827b38-e452-4548-b5e2-4b759ac615df
 # ╟─54b0477c-f0d4-4aea-8b5f-4b4b977bc030
-# ╟─9ede9d97-e252-481e-b38a-a6166744e160
+# ╠═9ede9d97-e252-481e-b38a-a6166744e160
 # ╟─ec1349d3-b7c1-4c0b-b0ad-87479fd55f1d
 # ╟─00442873-1716-4261-b18d-b10f79b9669d
 # ╟─f2f2f448-8d6a-428d-b596-68ac23c709aa
@@ -1775,8 +1775,8 @@ version = "3.5.0+0"
 # ╟─68df75b8-a83b-4235-83fc-9da0f7a629ae
 # ╟─07d12a2a-7349-4ce6-97ca-44bae282e697
 # ╟─81856168-e5cf-486a-8591-782d6d984ad1
-# ╟─06587dcd-b317-4ede-b70e-a4d79764aba6
-# ╟─e0c5f413-fa9a-47a3-8a8e-9dfb5634c00c
+# ╠═06587dcd-b317-4ede-b70e-a4d79764aba6
+# ╠═e0c5f413-fa9a-47a3-8a8e-9dfb5634c00c
 # ╟─f797d316-a00f-4085-8c0d-9fb744844e90
 # ╟─018d0a4f-9a99-484f-9ed8-fceda26d04bf
 # ╟─5d4149b6-fd2c-45c4-8c99-b5a9d9e34b77
